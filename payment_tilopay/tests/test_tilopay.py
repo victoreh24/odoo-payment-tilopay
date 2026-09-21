@@ -142,3 +142,35 @@ class TestTilopay(HttpCase):
                                      headers={'Content-Type': 'application/json'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(tx.state, 'done')
+
+    def test_unknown_consult_answer_is_not_a_decline(self):
+        """Tilopay knows nothing about the order while the guest is still typing the card."""
+        tx = self._tx(reference='TEST-UNKNOWN')
+        tx.write({'tilopay_checkout_url': 'https://x'})
+        tx._set_pending()
+        with patch('odoo.addons.payment_tilopay.models.payment_provider.PaymentProvider._tilopay_consult',
+                   return_value={'message': 'Order not found'}):
+            tx._tilopay_reconcile()
+        self.assertEqual(tx.state, 'pending', "no news must keep the transaction alive for the cron")
+        with patch('odoo.addons.payment_tilopay.models.payment_provider.PaymentProvider._tilopay_consult',
+                   return_value={'code': '1', 'orderNumber': 'TEST-UNKNOWN'}):
+            tx._tilopay_reconcile()
+        self.assertEqual(tx.state, 'done')
+
+    def test_unknown_consult_answer_gives_up_after_two_hours(self):
+        tx = self._tx(reference='TEST-STALE')
+        tx._set_pending()
+        self.env.cr.execute("UPDATE payment_transaction SET create_date = now() - interval '3 hours' WHERE id = %s", (tx.id,))
+        tx.invalidate_recordset(['create_date'])
+        with patch('odoo.addons.payment_tilopay.models.payment_provider.PaymentProvider._tilopay_consult',
+                   return_value={}):
+            tx._tilopay_reconcile()
+        self.assertEqual(tx.state, 'error')
+
+    def test_explicit_decline_status(self):
+        Tx = self.env['payment.transaction']
+        self.assertEqual(Tx._tilopay_normalize_status({'status': 'Rejected'}), 'error')
+        self.assertEqual(Tx._tilopay_normalize_status({'code': '0'}), 'error')
+        self.assertEqual(Tx._tilopay_normalize_status({'code': '1'}), 'done')
+        self.assertEqual(Tx._tilopay_normalize_status({}), 'unknown')
+
