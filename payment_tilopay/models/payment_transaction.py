@@ -116,7 +116,10 @@ class PaymentTransaction(models.Model):
             return 'pending'
         if status in const.CANCELED_STATUSES:
             return 'canceled'
-        return 'error'
+        if code or status in const.DECLINED_STATUSES:
+            # Only an explicit answer (a non-approval code or a decline status) is a rejection.
+            return 'error'
+        return 'unknown'
 
     def _apply_updates(self, payment_data):
         if self.provider_code != 'tilopay':
@@ -133,6 +136,15 @@ class PaymentTransaction(models.Model):
             self._set_pending(state_message=description or None)
         elif status == 'canceled':
             self._set_canceled(state_message=description or None)
+        elif status == 'unknown':
+            # "No news" is not a decline: the guest may still be typing the card number. Marking
+            # the transaction as failed here would tell the app the payment was rejected and
+            # take it out of the reconcile cron while the money can still arrive.
+            age_limit = fields.Datetime.now() - timedelta(hours=const.UNKNOWN_MAX_AGE_HOURS)
+            if self.create_date and self.create_date < age_limit:
+                self._set_error(_("Tilopay never confirmed this payment."))
+            elif self.state == 'draft':
+                self._set_pending()
         else:
             _logger.warning("Tilopay: transaction %s rejected: %s", self.reference, payment_data)
             self._set_error(_("Payment rejected by Tilopay. %s", description).strip())

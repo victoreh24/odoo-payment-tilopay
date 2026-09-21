@@ -1,6 +1,6 @@
 {
     'name': 'Payment Provider: Tilopay',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': 'Costa Rican payment gateway (cards + SINPE Movil) through the Tilopay hosted payment page',
