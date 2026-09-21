@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="payment_provider_tilopay" model="payment.provider">
+        <field name="name">Tilopay</field>
+        <field name="code">tilopay</field>
+        <field name="module_id" ref="base.module_payment_tilopay"/>
+        <field name="image_128" type="base64" file="payment_tilopay/static/description/icon.png"/>
+        <field name="redirect_form_view_id" ref="redirect_form"/>
+        <field name="payment_method_ids" eval="[Command.set([ref('payment.payment_method_card')])]"/>
+        <field name="allow_tokenization" eval="False"/>
+    </record>
+</odoo>
