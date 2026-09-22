@@ -1,0 +1,166 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_tilopay
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Lapa Concierge\n"
+"Language-Team: Spanish (Costa Rica)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__code
+msgid "Code"
+msgstr "Código"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_transaction__id
+msgid "ID"
+msgstr "ID"
+
+#. module: payment_tilopay
+#: model:ir.model,name:payment_tilopay.model_payment_provider
+msgid "Payment Provider"
+msgstr "Proveedor de pago"
+
+#. module: payment_tilopay
+#: model:ir.model,name:payment_tilopay.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Transacción de pago"
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_transaction.py:0
+msgid "Payment rejected by Tilopay. %s"
+msgstr "Pago rechazado por Tilopay. %s"
+
+#. module: payment_tilopay
+#: model_terms:ir.ui.view,arch_db:payment_tilopay.payment_provider_form
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,help:payment_tilopay.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr "El código técnico de este proveedor de pago."
+
+#. module: payment_tilopay
+#: model:ir.model.fields.selection,name:payment_tilopay.selection__payment_provider__code__tilopay
+#: model:payment.provider,name:payment_tilopay.payment_provider_tilopay
+msgid "Tilopay"
+msgstr "Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_api_base
+msgid "Tilopay API base URL"
+msgstr "URL base de la API de Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_api_password
+msgid "Tilopay API password"
+msgstr "Contraseña de la API de Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_api_user
+msgid "Tilopay API user"
+msgstr "Usuario de la API de Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_access_token
+msgid "Tilopay Access Token"
+msgstr "Token de acceso de Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_transaction__tilopay_checkout_url
+msgid "Tilopay Checkout Url"
+msgstr "URL de pago de Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_transaction__tilopay_last_consult
+msgid "Tilopay Last Consult"
+msgstr "Última consulta a Tilopay"
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_token_expiry
+msgid "Tilopay Token Expiry"
+msgstr "Vencimiento del token de Tilopay"
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_transaction.py:0
+msgid "Tilopay did not return a checkout URL."
+msgstr "Tilopay no devolvió una URL de pago."
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_provider.py:0
+msgid "Tilopay login did not return an access token."
+msgstr "El inicio de sesión en Tilopay no devolvió un token de acceso."
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_provider.py:0
+msgid "Tilopay login succeeded."
+msgstr "El inicio de sesión en Tilopay fue exitoso."
+
+#. module: payment_tilopay
+#: model:ir.model.fields,field_description:payment_tilopay.field_payment_provider__tilopay_key
+msgid "Tilopay merchant key"
+msgstr "Llave de comercio de Tilopay"
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_transaction.py:0
+msgid "Tilopay never confirmed this payment."
+msgstr "Tilopay nunca confirmó este pago."
+
+#. module: payment_tilopay
+#: model:ir.actions.server,name:payment_tilopay.cron_tilopay_reconcile_ir_actions_server
+msgid "Tilopay: reconcile pending transactions"
+msgstr "Tilopay: conciliar transacciones pendientes"
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_provider.py:0
+msgid "Unexpected Tilopay consult response."
+msgstr "Respuesta inesperada de la consulta a Tilopay."
+
+#. module: payment_tilopay
+#. odoo-python
+#: code:addons/payment_tilopay/models/payment_transaction.py:0
+msgid "Waiting for the customer to pay on Tilopay."
+msgstr "Esperando que el cliente pague en Tilopay."
+
+#. module: payment_tilopay
+#: model_terms:payment.provider,auth_msg:payment_tilopay.payment_provider_tilopay
+msgid "Your payment has been authorized."
+msgstr "Tu pago fue autorizado."
+
+#. module: payment_tilopay
+#: model_terms:payment.provider,cancel_msg:payment_tilopay.payment_provider_tilopay
+msgid "Your payment has been cancelled."
+msgstr "Tu pago fue cancelado."
+
+#. module: payment_tilopay
+#: model_terms:payment.provider,pending_msg:payment_tilopay.payment_provider_tilopay
+msgid "Your payment has been processed but is waiting for approval."
+msgstr "Tu pago fue procesado, pero está pendiente de aprobación."
+
+#. module: payment_tilopay
+#: model_terms:payment.provider,done_msg:payment_tilopay.payment_provider_tilopay
+msgid "Your payment has been processed."
+msgstr "Tu pago fue procesado."
+
