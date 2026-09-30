@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    name: Install on a fresh database and run the module tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      db:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U odoo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install payment_tilopay and run its tests
+        run: |
+          set -o pipefail
+          docker run --rm --network host \
+            -v "$PWD:/mnt/extra-addons:ro" \
+            -e HOST=127.0.0.1 -e USER=odoo -e PASSWORD=odoo \
+            odoo:19.0 odoo -d ci \
+              -i payment_tilopay \
+              --without-demo --test-enable \
+              --test-tags /payment_tilopay \
+              --stop-after-init --log-level=test 2>&1 | tee odoo-tests.log
+          grep -E 'odoo.tests.result: 0 failed, 0 error\(s\) of [0-9]+ tests' odoo-tests.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: odoo-tests.log
+          path: odoo-tests.log
